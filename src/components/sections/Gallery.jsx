@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaTimes } from "react-icons/fa";
+
+import Scene from "../common/Scene";
+import SectionHeader from "../common/SectionHeader";
 
 import photo1 from "../../assets/images/photo1.jpg";
 import photo2 from "../../assets/images/photo2.jpg";
@@ -11,7 +14,7 @@ import photo5 from "../../assets/images/photo5.jpg";
 const photos = [
   {
     image: photo1,
-    caption: "The day you unknowingly became my favorite person ❤️",
+    caption: "The day you unknowingly became my favorite person.",
   },
   {
     image: photo2,
@@ -27,182 +30,134 @@ const photos = [
   },
   {
     image: photo5,
-    caption: "If I had to choose again, I'd still choose you. ❤️",
+    caption: "If I had to choose again, I'd still choose you.",
   },
 ];
 
 export default function Gallery() {
   const [selected, setSelected] = useState(null);
 
+  useEffect(() => {
+    if (!selected) return;
+
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") setSelected(null);
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [selected]);
+
   return (
-    <section className="relative min-h-screen py-28 px-6 overflow-hidden">
+    <Scene className="!justify-start md:!justify-center" aria-labelledby="gallery-title">
+      <SectionHeader
+        titleId="gallery-title"
+        eyebrow="Chapter 4"
+        title="Our Beautiful Memories"
+        subtitle="Every picture tells a story, every story reminds me of you."
+      />
 
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-pink-900/5 to-transparent pointer-events-none" />
-
-      <motion.h1
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        className="titleFont text-center text-7xl md:text-8xl text-pink-200 mb-6"
-      >
-        Our Beautiful Memories
-      </motion.h1>
-
-      <p className="text-center text-pink-100 mb-20 text-lg">
-        Every picture tells a story, every story reminds me of you ❤️
-      </p>
-
-      <div className="flex flex-wrap justify-center gap-12">
-
+      <div className="flex flex-wrap justify-center gap-8 md:gap-10 lg:gap-12">
         {photos.map((photo, index) => (
-
-          <motion.div
-            key={index}
+          <motion.button
+            key={photo.caption}
+            type="button"
             initial={{
               opacity: 0,
-              y: 50,
-              rotate: index % 2 === 0 ? -8 : 8,
+              y: 40,
+              rotate: index % 2 === 0 ? -6 : 6,
             }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            whileHover={{
-              scale: 1.08,
-              rotate: 0,
-              y: -15,
-            }}
-            transition={{
-              duration: 0.5,
-            }}
-            viewport={{ once: true }}
+            whileInView={{ opacity: 1, y: 0 }}
+            whileHover={{ scale: 1.04, rotate: 0, y: -10 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            viewport={{ once: true, amount: 0.2 }}
             onClick={() => setSelected(photo)}
+            aria-label={`View memory: ${photo.caption}`}
             className="
-              relative
-              bg-[#fffaf5]
-              p-4
-              rounded-md
-              shadow-[0_25px_60px_rgba(0,0,0,.45)]
-              cursor-pointer
-              transition-all
-              duration-500
+              relative bg-[#fffaf5] p-3 sm:p-4 rounded-md
+              shadow-[0_25px_60px_rgba(0,0,0,0.4)]
+              cursor-pointer text-left max-w-[280px] w-full
+              focus-visible:outline focus-visible:outline-2
+              focus-visible:outline-offset-4 focus-visible:outline-pink-200
             "
           >
-
-            {/* Pin */}
-
-            <div className="absolute left-1/2 -translate-x-1/2 -top-2 w-5 h-5 rounded-full bg-red-500 shadow-lg border-2 border-white" />
+            <span
+              className="absolute left-1/2 -translate-x-1/2 -top-2 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-rose-500 shadow-lg border-2 border-white"
+              aria-hidden="true"
+            />
 
             <img
               src={photo.image}
-              alt=""
-              className="w-64 h-80 object-cover rounded select-none"
+              alt={photo.caption}
+              className="w-full aspect-[4/5] object-cover rounded select-none"
               draggable="false"
+              loading="lazy"
             />
 
-            <p className="text-center mt-5 text-gray-700 italic text-lg font-medium">
+            <p className="text-center mt-4 text-[var(--ink)]/75 italic text-sm sm:text-base font-medium leading-relaxed">
               {photo.caption}
             </p>
-
-          </motion.div>
-
+          </motion.button>
         ))}
-
       </div>
 
       <AnimatePresence>
-
         {selected && (
-
           <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label={selected.caption}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="
-              fixed
-              inset-0
-              z-50
-              bg-black/80
-              backdrop-blur-lg
-              flex
-              items-center
-              justify-center
-              p-6
-            "
+            className="fixed inset-0 z-50 bg-black/75 backdrop-blur-xl flex items-center justify-center p-4 sm:p-6"
             onClick={() => setSelected(null)}
           >
-
             <motion.div
-              initial={{
-                scale: .8,
-                opacity: 0,
-              }}
-              animate={{
-                scale: 1,
-                opacity: 1,
-              }}
-              exit={{
-                scale: .8,
-                opacity: 0,
-              }}
-              transition={{
-                duration: .4,
-              }}
+              initial={{ scale: 0.92, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.92, opacity: 0 }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               onClick={(e) => e.stopPropagation()}
               className="
-                bg-white
-                rounded-3xl
-                p-5
-                max-w-4xl
-                w-full
-                shadow-[0_30px_80px_rgba(0,0,0,.6)]
+                glass-strong rounded-3xl p-4 sm:p-5
+                max-w-4xl w-full
                 relative
               "
             >
-
               <button
+                type="button"
                 onClick={() => setSelected(null)}
+                aria-label="Close photo"
                 className="
-                  absolute
-                  top-5
-                  right-5
-                  bg-pink-500
-                  hover:bg-pink-600
-                  w-11
-                  h-11
-                  rounded-full
-                  text-white
-                  flex
-                  items-center
-                  justify-center
+                  absolute top-4 right-4 z-10
+                  bg-[var(--primary)] hover:bg-[var(--primary-deep)]
+                  w-11 h-11 rounded-full text-white
+                  flex items-center justify-center
+                  transition-colors duration-300
                 "
               >
-                <FaTimes />
+                <FaTimes aria-hidden="true" />
               </button>
 
               <img
                 src={selected.image}
-                alt=""
-                className="
-                  w-full
-                  max-h-[70vh]
-                  object-contain
-                  rounded-2xl
-                "
+                alt={selected.caption}
+                className="w-full max-h-[65vh] sm:max-h-[70vh] object-contain rounded-2xl"
               />
 
-              <p className="mt-8 text-center text-2xl text-gray-700 italic leading-relaxed">
+              <p className="mt-6 sm:mt-8 text-center text-lg sm:text-xl md:text-2xl text-pink-50/90 italic leading-relaxed px-2">
                 {selected.caption}
               </p>
-
             </motion.div>
-
           </motion.div>
-
         )}
-
       </AnimatePresence>
-
-    </section>
+    </Scene>
   );
 }

@@ -1,55 +1,35 @@
-import { motion } from "framer-motion";
 import { siteData } from "../../data/siteData";
+import Scene from "../common/Scene";
+import SectionHeader from "../common/SectionHeader";
+import GlassPanel from "../common/GlassPanel";
 
 export default function Promise() {
   return (
-    <section className="min-h-screen flex items-center justify-center px-6">
+    <Scene aria-labelledby="promise-title" className="pb-28">
+      <SectionHeader
+        titleId="promise-title"
+        eyebrow="Chapter 6"
+        title="A Promise To You"
+        subtitle="Words I mean with everything I am."
+      />
 
-      <motion.div
-        initial={{ opacity: 0, y: 80 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1 }}
-        className="
-        max-w-3xl
-        w-full
-        rounded-[40px]
-        bg-white/10
-        backdrop-blur-2xl
-        border
-        border-white/10
-        p-12
-        shadow-[0_25px_80px_rgba(255,105,180,.2)]
-        text-center
-        "
-      >
+      <GlassPanel strong className="max-w-3xl mx-auto text-center">
+        <span className="text-5xl sm:text-6xl mb-6 block" aria-hidden="true">
+          ♡
+        </span>
 
-        <div className="text-7xl mb-8">
-          💍
-        </div>
-
-        <h1 className="titleFont text-6xl text-pink-200 mb-10">
-          Chapter 6
-        </h1>
-
-        <h2 className="text-3xl font-bold text-white mb-10">
-          A Promise To You
-        </h2>
-
-        <p className="text-xl text-pink-100 leading-10 whitespace-pre-line">
+        <p className="text-lg sm:text-xl text-pink-50/90 leading-relaxed sm:leading-9 whitespace-pre-line">
           {siteData.promise}
         </p>
 
-        <div className="mt-14 text-pink-300 text-2xl">
+        <p className="mt-12 text-pink-200 text-xl sm:text-2xl">
           Forever Yours,
-        </div>
+        </p>
 
-        <div className="text-4xl font-bold text-white mt-3">
-          {siteData.couple.yourName} ❤️
-        </div>
-
-      </motion.div>
-
-    </section>
+        <p className="text-3xl sm:text-4xl font-semibold text-white mt-2">
+          {siteData.couple.yourName}
+        </p>
+      </GlassPanel>
+    </Scene>
   );
 }

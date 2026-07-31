@@ -1,133 +1,110 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { siteData } from "../../data/siteData";
+import Scene from "../common/Scene";
+import SectionHeader from "../common/SectionHeader";
+import GlassPanel from "../common/GlassPanel";
 
 export default function Reasons() {
   const [index, setIndex] = useState(0);
+  const isComplete = index >= siteData.reasons.length;
 
   const nextReason = () => {
-    if (index < siteData.reasons.length) {
-      setIndex(index + 1);
-    }
+    if (!isComplete) setIndex((current) => current + 1);
   };
 
   return (
-    <section className="min-h-screen flex flex-col justify-center items-center px-6">
+    <Scene aria-labelledby="reasons-title">
+      <SectionHeader
+        titleId="reasons-title"
+        eyebrow="Chapter 5"
+        title="Why I Love You"
+        subtitle="Tap through each reason — one heartbeat at a time."
+      />
 
-      <h1 className="titleFont text-6xl md:text-8xl text-pink-200 mb-5 text-center">
-        Chapter 5
-      </h1>
+      <div className="flex justify-center">
+        <AnimatePresence mode="wait">
+          {!isComplete ? (
+            <GlassPanel
+              key={index}
+              strong
+              motionProps={{
+                initial: { rotateY: 70, opacity: 0 },
+                animate: { rotateY: 0, opacity: 1 },
+                exit: { rotateY: -70, opacity: 0 },
+                transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+                whileInView: undefined,
+                viewport: undefined,
+              }}
+              onClick={nextReason}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  nextReason();
+                }
+              }}
+              role="button"
+              tabIndex={0}
+              aria-label={`Reason ${index + 1} of ${siteData.reasons.length}. Activate to continue.`}
+              className="
+                max-w-xl min-h-[300px] sm:min-h-[320px]
+                cursor-pointer text-center
+                flex flex-col justify-center items-center
+                focus-visible:outline focus-visible:outline-2
+                focus-visible:outline-offset-4 focus-visible:outline-pink-200
+              "
+              style={{ transformStyle: "preserve-3d" }}
+            >
+              <span className="text-5xl mb-5" aria-hidden="true">
+                ♥
+              </span>
 
-      <p className="text-pink-100 text-2xl mb-16">
-        Why I Love You ❤️
-      </p>
+              <h3 className="text-pink-200 text-xl sm:text-2xl font-semibold mb-5">
+                Reason #{index + 1}
+              </h3>
 
-      <AnimatePresence mode="wait">
+              <p className="text-white text-xl sm:text-2xl leading-relaxed max-w-md">
+                {siteData.reasons[index]}
+              </p>
 
-        {index < siteData.reasons.length ? (
+              <p className="mt-10 text-pink-200/70 text-sm">
+                Tap anywhere to continue
+              </p>
+            </GlassPanel>
+          ) : (
+            <GlassPanel
+              key="finale"
+              strong
+              className="max-w-2xl text-center"
+              motionProps={{
+                initial: { scale: 0.92, opacity: 0 },
+                animate: { scale: 1, opacity: 1 },
+                whileInView: undefined,
+                viewport: undefined,
+                transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
+              }}
+            >
+              <span className="text-6xl mb-6 block" aria-hidden="true">
+                ♥
+              </span>
 
-          <motion.div
-            key={index}
-            initial={{
-              rotateY: 90,
-              opacity: 0,
-            }}
-            animate={{
-              rotateY: 0,
-              opacity: 1,
-            }}
-            exit={{
-              rotateY: -90,
-              opacity: 0,
-            }}
-            transition={{
-              duration: 0.6,
-            }}
-            onClick={nextReason}
-            className="
-            w-full
-            max-w-xl
-            min-h-[320px]
-            cursor-pointer
-            rounded-[35px]
-            border
-            border-pink-300/20
-            bg-white/10
-            backdrop-blur-2xl
-            shadow-2xl
-            flex
-            flex-col
-            justify-center
-            items-center
-            text-center
-            p-10
-            "
-          >
+              <h3 className="text-4xl sm:text-5xl text-pink-100 mb-6 titleFont">
+                And One More Thing...
+              </h3>
 
-            <div className="text-6xl mb-6">
-              ❤️
-            </div>
-
-            <h2 className="text-pink-300 text-2xl font-bold mb-6">
-              Reason #{index + 1}
-            </h2>
-
-            <p className="text-white text-2xl leading-10">
-              {siteData.reasons[index]}
-            </p>
-
-            <p className="mt-12 text-pink-200 text-sm">
-              Tap anywhere to continue
-            </p>
-
-          </motion.div>
-
-        ) : (
-
-          <motion.div
-            initial={{
-              scale: 0.8,
-              opacity: 0,
-            }}
-            animate={{
-              scale: 1,
-              opacity: 1,
-            }}
-            className="
-            max-w-2xl
-            text-center
-            rounded-[35px]
-            bg-white/10
-            backdrop-blur-xl
-            p-12
-            shadow-2xl
-            "
-          >
-
-            <div className="text-7xl mb-8">
-              ❤️
-            </div>
-
-            <h2 className="text-5xl text-pink-200 mb-8 titleFont">
-              And One More Thing...
-            </h2>
-
-            <p className="text-white text-2xl leading-10">
-              These are only ten reasons.
-              <br /><br />
-              The truth is...
-              <br /><br />
-              I'd need a lifetime
-              to tell you every reason
-              why I love you.
-            </p>
-
-          </motion.div>
-
-        )}
-
-      </AnimatePresence>
-
-    </section>
+              <p className="text-white/95 text-lg sm:text-xl leading-relaxed">
+                These are only ten reasons.
+                <br />
+                <br />
+                The truth is...
+                <br />
+                <br />
+                I&apos;d need a lifetime to tell you every reason why I love you.
+              </p>
+            </GlassPanel>
+          )}
+        </AnimatePresence>
+      </div>
+    </Scene>
   );
 }

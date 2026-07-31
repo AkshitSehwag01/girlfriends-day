@@ -2,19 +2,24 @@ import { motion } from "framer-motion";
 
 export default function Scene({
   children,
+  id,
   className = "",
+  as: Component = motion.section,
+  ...props
 }) {
   return (
-    <motion.section
+    <Component
+      id={id}
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{
-        duration: 1,
-      }}
-      className={`min-h-screen flex items-center justify-center px-6 relative ${className}`}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      className={`section-shell ${className}`}
+      {...props}
     >
-      {children}
-    </motion.section>
+      <div className="relative z-10 w-full max-w-[var(--content-max)] mx-auto">
+        {children}
+      </div>
+    </Component>
   );
 }
