@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+:root{
+  --primary:#ff4d8d;
+  --secondary:#ff7eb3;
+  --light:#fff8fb;
+  --dark:#2d1b2e;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:"Poppins",sans-serif;
+  overflow-x:hidden;
+  color:white;
+
+  background:
+  radial-gradient(circle at top,#ff7eb355,transparent 40%),
+  linear-gradient(135deg,#16071c,#2a0d2d,#44214d);
+
+  min-height:100vh;
+}
+
+#root{
+  min-height:100vh;
+}
+
+.titleFont{
+  font-family:"Great Vibes",cursive;
+}
