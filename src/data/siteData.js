@@ -47,23 +47,23 @@ export const siteData = {
   memories: [
     {
       image: "photo1.jpg",
-      caption: "Our first beautiful memory ❤️",
+      caption: "The day you unknowingly became my favorite person. ❤️",
     },
     {
       image: "photo2.jpg",
-      caption: "One more reason I smile every day.",
+      caption: "Every smile of yours feels like home.",
     },
     {
       image: "photo3.jpg",
-      caption: "A moment I'll never forget.",
+      caption: "Every adventure becomes beautiful with you.",
     },
     {
       image: "photo4.jpg",
-      caption: "You make everything brighter.",
+      caption: "My favorite place will always be beside you.",
     },
     {
       image: "photo5.jpg",
-      caption: "Forever begins with you.",
+      caption: "I'd choose you again. Every single lifetime. ❤️",
     },
   ],
 
