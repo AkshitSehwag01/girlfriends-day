@@ -1,38 +1,160 @@
 @import "tailwindcss";
 
-:root{
-  --primary:#ff4d8d;
-  --secondary:#ff7eb3;
-  --light:#fff8fb;
-  --dark:#2d1b2e;
+:root {
+  /* Colors */
+  --primary: #ff4d8d;
+  --primary-soft: #ff7eb3;
+  --primary-deep: #c9184a;
+  --light: #fff8fb;
+  --ink: #1a0a1c;
+  --text-muted: rgba(255, 241, 248, 0.8);
+  --text-subtle: rgba(255, 241, 248, 0.65);
+  --surface-night: #0a0612;
+  --surface-mid: #16071c;
+  --surface-glow: #2a0d2d;
+
+  /* Typography */
+  --font-body: "Poppins", sans-serif;
+  --font-display: "Great Vibes", cursive;
+  --text-xs: clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem);
+  --text-sm: clamp(0.875rem, 0.8rem + 0.25vw, 1rem);
+  --text-base: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 1rem + 0.5vw, 1.35rem);
+  --text-xl: clamp(1.25rem, 1.1rem + 0.7vw, 1.6rem);
+  --text-display: clamp(3rem, 2.2rem + 4vw, 6.5rem);
+  --leading-body: 1.7;
+  --leading-tight: 1.15;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --section-pad-y: clamp(4.5rem, 10vh, 8rem);
+  --section-pad-x: clamp(1.25rem, 4vw, 2rem);
+  --content-max: 56rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.75rem;
+  --radius-xl: 2.25rem;
+  --radius-full: 9999px;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-bg-strong: rgba(255, 255, 255, 0.12);
+  --glass-border: rgba(255, 255, 255, 0.16);
+  --glass-blur: 28px;
+  --glass-blur-strong: 36px;
+
+  /* Shadows */
+  --shadow-soft: 0 12px 40px rgba(0, 0, 0, 0.25);
+  --shadow-elevated: 0 25px 80px rgba(0, 0, 0, 0.35);
+  --shadow-glow: 0 0 40px rgba(255, 77, 141, 0.35);
+  --glass-shadow: var(--shadow-elevated);
+
+  /* Motion */
+  --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 200ms;
+  --duration-base: 300ms;
+  --duration-slow: 700ms;
 }
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-html{
-  scroll-behavior:smooth;
+html {
+  scroll-behavior: smooth;
 }
 
-body{
-  font-family:"Poppins",sans-serif;
-  overflow-x:hidden;
-  color:white;
-
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  overflow-x: hidden;
+  color: white;
   background:
-  radial-gradient(circle at top,#ff7eb355,transparent 40%),
-  linear-gradient(135deg,#16071c,#2a0d2d,#44214d);
-
-  min-height:100vh;
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(255, 126, 179, 0.22), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 90% 80%, rgba(255, 77, 141, 0.12), transparent 50%),
+    linear-gradient(165deg, var(--surface-night) 0%, var(--surface-mid) 40%, var(--surface-glow) 100%);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-#root{
-  min-height:100vh;
+#root {
+  min-height: 100vh;
 }
 
-.titleFont{
-  font-family:"Great Vibes",cursive;
+.titleFont {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: var(--leading-tight);
+}
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-strong {
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(var(--glass-blur-strong));
+  -webkit-backdrop-filter: blur(var(--glass-blur-strong));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.section-shell {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--section-pad-y) var(--section-pad-x);
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary-soft);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
