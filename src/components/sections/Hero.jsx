@@ -5,6 +5,7 @@ import PrimaryButton from "../common/PrimaryButton";
 import FloatingHearts from "../effects/FloatingHearts";
 import Countdown from "./Countdown";
 import LoveLetter from "./LoveLetter";
+import Gallery from "./Gallery";
 
 export default function Hero() {
   return (
@@ -88,7 +89,9 @@ export default function Hero() {
       <Countdown />
 
       <LoveLetter />
-      
+
+      <Gallery />
+
     </>
   );
 }
