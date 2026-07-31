@@ -6,6 +6,8 @@ import FloatingHearts from "../effects/FloatingHearts";
 import Countdown from "./Countdown";
 import LoveLetter from "./LoveLetter";
 import Gallery from "./Gallery";
+import Reasons from "./Reasons";
+import Promise from "./Promise";
 
 export default function Hero() {
   return (
@@ -91,6 +93,10 @@ export default function Hero() {
       <LoveLetter />
 
       <Gallery />
+
+      <Reasons />
+
+      <Promise />
 
     </>
   );

@@ -94,4 +94,25 @@ Forever yours,
 
 Akshit ❤️
 `,
+
+promise: `
+I can't promise that every day will be perfect.
+
+But I promise to always choose us.
+
+I promise to stand beside you through the easy days and the difficult ones.
+
+To keep making you laugh.
+
+To celebrate your victories.
+
+To support your dreams.
+
+To remind you every single day how deeply you are loved.
+
+No matter what tomorrow brings...
+
+I'll always be grateful that life brought you into mine.
+`,
+
 };

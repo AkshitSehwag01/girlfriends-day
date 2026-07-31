@@ -12,8 +12,11 @@ import Moon from "./components/effects/Moon";
 import Fireflies from "./components/effects/Fireflies";
 import ShootingStar from "./components/effects/ShootingStar";
 
+import MusicPlayer from "./components/common/MusicPlayer";
+
 function App() {
   const [step, setStep] = useState("intro");
+  const [musicStarted, setMusicStarted] = useState(false);
 
   return (
     <>
@@ -31,11 +34,17 @@ function App() {
 
       {step === "password" && (
         <PasswordScreen
-          onUnlock={() => setStep("hero")}
+        onUnlock={() => {
+          setMusicStarted(true);
+          setStep("hero");
+        }}
         />
       )}
 
       {step === "hero" && <Hero />}
+
+      <MusicPlayer autoPlay={musicStarted} />
+
     </>
   );
 }
