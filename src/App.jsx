@@ -4,6 +4,7 @@ import Background from "./components/common/Background";
 import IntroScreen from "./components/intro/IntroScreen";
 import PasswordScreen from "./components/intro/PasswordScreen";
 import Hero from "./components/sections/Hero";
+import Stars from "./components/effects/Stars";
 
 function App() {
   const [step, setStep] = useState("intro");
@@ -11,6 +12,7 @@ function App() {
   return (
     <>
       <Background />
+      <Stars />
 
       {step === "intro" && (
         <IntroScreen

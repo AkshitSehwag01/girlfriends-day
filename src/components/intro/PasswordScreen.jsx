@@ -9,7 +9,7 @@ export default function PasswordScreen({ onUnlock }) {
   const [error, setError] = useState("");
 
   const checkPassword = () => {
-    if (password === siteData.password) {
+    if (password === siteData.relationship.password) {
       onUnlock();
     } else {
       setError("Only Siri knows the correct answer ❤️");

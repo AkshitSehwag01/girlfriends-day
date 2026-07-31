@@ -1,53 +1,64 @@
 import { motion } from "framer-motion";
 
 export default function Background() {
-
   return (
     <>
+      <div className="fixed inset-0 -z-50 bg-[#070B1A]" />
+
       <motion.div
-
         animate={{
-          x:[-80,80,-80],
-          y:[-50,50,-50]
+          x: [-80, 60, -80],
+          y: [-50, 70, -50],
         }}
-
         transition={{
-          duration:20,
-          repeat:Infinity
+          duration: 20,
+          repeat: Infinity,
+          ease: "linear",
         }}
-
         className="fixed
-        top-[-200px]
-        left-[-150px]
-        w-[500px]
-        h-[500px]
+        top-[-250px]
+        left-[-200px]
+        w-[700px]
+        h-[700px]
         rounded-full
-        blur-[130px]
-        bg-pink-500/30
-        -z-10"
+        bg-pink-500/20
+        blur-[160px]
+        -z-40"
       />
 
       <motion.div
-
         animate={{
-          x:[50,-50,50],
-          y:[80,-80,80]
+          x: [70, -70, 70],
+          y: [80, -60, 80],
         }}
-
         transition={{
-          duration:24,
-          repeat:Infinity
+          duration: 25,
+          repeat: Infinity,
+          ease: "linear",
         }}
-
         className="fixed
-        bottom-[-180px]
-        right-[-180px]
-        w-[550px]
-        h-[550px]
+        bottom-[-250px]
+        right-[-200px]
+        w-[700px]
+        h-[700px]
         rounded-full
-        blur-[140px]
         bg-fuchsia-500/20
-        -z-10"
+        blur-[160px]
+        -z-40"
+      />
+
+      <motion.div
+        animate={{
+          opacity: [0.3, 0.7, 0.3],
+        }}
+        transition={{
+          repeat: Infinity,
+          duration: 5,
+        }}
+        className="fixed
+        inset-0
+        bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_70%)]
+        -z-30"
       />
     </>
   );
