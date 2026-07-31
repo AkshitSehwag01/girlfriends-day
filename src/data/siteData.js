@@ -72,15 +72,23 @@ My Dearest Siri,
 
 Happy Girlfriend's Day ❤️
 
-I don't know if a website can truly express how much you mean to me, but I wanted to create something with my own hands, something that would always remind you of how special you are to me.
+If you're reading this, you've already unlocked the little world I made just for you.
 
-Every day with you becomes a memory I never want to lose. Your smile, your kindness, your laughter, and the way you make my world brighter are gifts I'll always treasure.
+I wanted to give you something different this year. Not something bought from a store, but something I built with my own hands, one line of code at a time.
 
-No matter where life takes us, I hope we keep making beautiful memories together.
+Every section of this website carries a memory, a feeling, or a reason why you're so special to me.
 
-Thank you for being you.
+Thank you for being patient with me.
+Thank you for making me laugh.
+Thank you for believing in me even when I doubted myself.
 
-I love you.
+You make ordinary days feel extraordinary, and being with you has been one of the happiest parts of my life.
+
+I hope this small surprise makes you smile the way your smile always makes my day brighter.
+
+Happy Girlfriend's Day, Siri.
+
+I love you more than words can ever fully express.
 
 Forever yours,
 

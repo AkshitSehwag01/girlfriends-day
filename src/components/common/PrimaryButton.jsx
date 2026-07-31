@@ -1,15 +1,26 @@
 export default function PrimaryButton({
-    children,
-    onClick,
-    type = "button"
-  }) {
-    return (
-      <button
-        type={type}
-        onClick={onClick}
-        className="px-8 py-4 rounded-full bg-pink-600 hover:bg-pink-700 text-white font-semibold text-lg transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg"
-      >
-        {children}
-      </button>
-    );
-  }
+  children,
+  onClick,
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className="
+      rounded-full
+      px-10
+      py-4
+      text-lg
+      font-semibold
+      bg-pink-500
+      hover:bg-pink-600
+      text-white
+      transition-all
+      duration-300
+      hover:scale-105
+      shadow-[0_0_40px_rgba(255,77,141,.4)]
+      "
+    >
+      {children}
+    </button>
+  );
+}
