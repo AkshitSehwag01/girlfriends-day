@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import Background from "./components/common/Background";
 import MusicPlayer from "./components/common/MusicPlayer";
+import SmoothScroll from "./components/common/SmoothScroll";
 
 import IntroScreen from "./components/intro/IntroScreen";
 import PasswordScreen from "./components/intro/PasswordScreen";
@@ -15,10 +16,10 @@ import Fireflies from "./components/effects/Fireflies";
 import ShootingStar from "./components/effects/ShootingStar";
 
 const screenTransition = {
-  initial: { opacity: 0, filter: "blur(8px)" },
-  animate: { opacity: 1, filter: "blur(0px)" },
-  exit: { opacity: 0, filter: "blur(8px)" },
-  transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+  initial: { opacity: 0, y: 16 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -12 },
+  transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
 };
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
   const [musicStarted, setMusicStarted] = useState(false);
 
   return (
-    <>
+    <SmoothScroll enabled={step === "hero"}>
       <Background />
       <Stars />
       <Moon />
@@ -35,13 +36,21 @@ function App() {
 
       <AnimatePresence mode="wait">
         {step === "intro" && (
-          <motion.div key="intro" {...screenTransition}>
+          <motion.div
+            key="intro"
+            className="relative z-40"
+            {...screenTransition}
+          >
             <IntroScreen onContinue={() => setStep("password")} />
           </motion.div>
         )}
 
         {step === "password" && (
-          <motion.div key="password" {...screenTransition}>
+          <motion.div
+            key="password"
+            className="relative z-40"
+            {...screenTransition}
+          >
             <PasswordScreen
               onUnlock={() => {
                 setMusicStarted(true);
@@ -52,14 +61,18 @@ function App() {
         )}
 
         {step === "hero" && (
-          <motion.div key="hero" {...screenTransition}>
+          <motion.div
+            key="hero"
+            className="relative z-10"
+            {...screenTransition}
+          >
             <Hero />
           </motion.div>
         )}
       </AnimatePresence>
 
       <MusicPlayer autoPlay={musicStarted} />
-    </>
+    </SmoothScroll>
   );
 }
 

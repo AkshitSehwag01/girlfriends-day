@@ -3,6 +3,7 @@ import { FaHeart, FaChevronDown } from "react-icons/fa";
 import { siteData } from "../../data/siteData";
 import PrimaryButton from "../common/PrimaryButton";
 import GlassPanel from "../common/GlassPanel";
+import { useSmoothScroll } from "../common/SmoothScroll";
 import FloatingHearts from "../effects/FloatingHearts";
 import Countdown from "./Countdown";
 import LoveLetter from "./LoveLetter";
@@ -11,10 +12,10 @@ import Reasons from "./Reasons";
 import Promise from "./Promise";
 
 export default function Hero() {
+  const { scrollTo } = useSmoothScroll();
+
   const scrollToJourney = () => {
-    document.getElementById("countdown")?.scrollIntoView({
-      behavior: "smooth",
-    });
+    scrollTo("#countdown");
   };
 
   return (
