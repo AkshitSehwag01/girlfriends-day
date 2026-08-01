@@ -15,6 +15,8 @@ import Moon from "./components/effects/Moon";
 import Fireflies from "./components/effects/Fireflies";
 import ShootingStar from "./components/effects/ShootingStar";
 
+import StoryNavigation from "./components/navigation/StoryNavigation";
+
 const screenTransition = {
   initial: { opacity: 0, y: 16 },
   animate: { opacity: 1, y: 0 },
@@ -33,6 +35,8 @@ function App() {
       <Moon />
       <Fireflies />
       <ShootingStar />
+
+      <StoryNavigation />
 
       <AnimatePresence mode="wait">
         {step === "intro" && (

@@ -17,9 +17,9 @@ export const siteData = {
   },
 
   intro: {
-    line1: "Every love story...",
-    line2: "has a beginning.",
-    line3: "Ours began on...",
+    line1: "Every Love Story...",
+    line2: "Has A Beginning...",
+    line3: "Ours Began On...",
     line4: "30 May 2026",
   },
 

@@ -6,10 +6,12 @@ import GlassPanel from "../common/GlassPanel";
 import { useSmoothScroll } from "../common/SmoothScroll";
 import FloatingHearts from "../effects/FloatingHearts";
 import Countdown from "./Countdown";
-import LoveLetter from "./LoveLetter";
+import LoveLetter from "./loveLetter/LoveLetter";
 import Gallery from "./Gallery";
 import Reasons from "./Reasons";
 import Promise from "./Promise";
+import Envelope from "./loveLetter/Envelope";
+import Ending from "./Ending";
 
 export default function Hero() {
   const { scrollTo } = useSmoothScroll();
@@ -20,7 +22,7 @@ export default function Hero() {
 
   return (
     <main>
-      <section
+      <section id="hero"
         className="relative min-h-screen flex items-center justify-center overflow-hidden px-[var(--section-pad-x)] py-[var(--section-pad-y)]"
         aria-labelledby="hero-title"
       >
@@ -106,6 +108,8 @@ export default function Hero() {
       <Gallery />
       <Reasons />
       <Promise />
+      <Ending />
+      <Envelope />
     </main>
   );
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+
 import { siteData } from "../../data/siteData";
 import Scene from "../common/Scene";
 import SectionHeader from "../common/SectionHeader";
@@ -7,6 +8,7 @@ import SectionHeader from "../common/SectionHeader";
 function getTimeTogether() {
   const start = new Date(siteData.relationship.anniversary);
   const now = new Date();
+
   const diff = Math.max(0, now - start);
 
   return {
@@ -20,17 +22,28 @@ function getTimeTogether() {
 function TimeCard({ number, label }) {
   return (
     <motion.div
-      whileHover={{ y: -4, scale: 1.03 }}
-      transition={{ type: "spring", stiffness: 320, damping: 20 }}
-      className="glass rounded-2xl md:rounded-3xl p-5 sm:p-6 md:p-8 min-w-0"
+      whileHover={{
+        y: -6,
+        scale: 1.04,
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 320,
+        damping: 20,
+      }}
+      className="
+      glass
+      rounded-3xl
+      p-6
+      md:p-8
+      text-center
+      "
     >
-      <p
-        className="text-3xl sm:text-4xl md:text-5xl font-bold text-pink-200 text-center tabular-nums"
-        aria-hidden="true"
-      >
+      <h2 className="text-4xl md:text-6xl font-bold text-pink-200 tabular-nums">
         {String(number).padStart(2, "0")}
-      </p>
-      <p className="mt-3 text-center uppercase tracking-[0.2em] text-xs sm:text-sm text-pink-100/75">
+      </h2>
+
+      <p className="mt-3 uppercase tracking-[0.25em] text-xs text-pink-100/70">
         {label}
       </p>
     </motion.div>
@@ -41,11 +54,11 @@ export default function Countdown() {
   const [time, setTime] = useState(getTimeTogether);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const timer = setInterval(() => {
       setTime(getTimeTogether());
     }, 1000);
 
-    return () => clearInterval(interval);
+    return () => clearInterval(timer);
   }, []);
 
   const anniversaryLabel = new Date(
@@ -57,19 +70,52 @@ export default function Countdown() {
   });
 
   return (
-    <Scene id="countdown" aria-labelledby="countdown-title">
+    <Scene
+      id="countdown"
+      aria-labelledby="countdown-title"
+    >
       <SectionHeader
         titleId="countdown-title"
-        title="Together Since"
-        subtitle={anniversaryLabel}
+        eyebrow="Chapter II"
+        title="Every Second With You"
+        subtitle={`Since ${anniversaryLabel}`}
       />
 
+      <motion.p
+        initial={{
+          opacity: 0,
+          y: 20,
+        }}
+        whileInView={{
+          opacity: 1,
+          y: 0,
+        }}
+        viewport={{ once: true }}
+        className="
+        mx-auto
+        mb-14
+        max-w-2xl
+        text-center
+        text-pink-100/80
+        text-lg
+        leading-8
+        "
+      >
+        Every second we've shared has become another beautiful memory.
+        This timer isn't counting down.
+        It's counting everything we've experienced together.
+      </motion.p>
+
       <div
-        className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8"
         role="timer"
         aria-live="polite"
         aria-atomic="true"
-        aria-label={`Together for ${time.days} days, ${time.hours} hours, ${time.minutes} minutes, and ${time.seconds} seconds`}
+        className="
+        grid
+        grid-cols-2
+        md:grid-cols-4
+        gap-6
+        "
       >
         <TimeCard number={time.days} label="Days" />
         <TimeCard number={time.hours} label="Hours" />

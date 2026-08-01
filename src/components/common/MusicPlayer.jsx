@@ -1,93 +1,222 @@
-import { useRef, useState, useEffect } from "react";
-import { FaPlay, FaPause, FaMusic } from "react-icons/fa";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import {
+  FaPlay,
+  FaPause,
+  FaMusic,
+} from "react-icons/fa";
 
 import song from "../../assets/music/iwannabeyours.mp3";
-import { siteData } from "../../data/siteData";
 
 export default function MusicPlayer({ autoPlay }) {
   const audioRef = useRef(null);
+
   const [playing, setPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [current, setCurrent] = useState(0);
+  const [duration, setDuration] = useState(0);
 
   useEffect(() => {
-    if (autoPlay) setPlaying(true);
-  }, [autoPlay]);
+    const audio = audioRef.current;
+
+    if (!audio) return;
+
+    const update = () => {
+      setCurrent(audio.currentTime);
+      setDuration(audio.duration || 0);
+
+      if (audio.duration) {
+        setProgress((audio.currentTime / audio.duration) * 100);
+      }
+    };
+
+    audio.addEventListener("timeupdate", update);
+    audio.addEventListener("loadedmetadata", update);
+
+    return () => {
+      audio.removeEventListener("timeupdate", update);
+      audio.removeEventListener("loadedmetadata", update);
+    };
+  }, []);
 
   useEffect(() => {
     if (!audioRef.current) return;
 
-    if (playing) {
-      audioRef.current.play().catch(() => {});
-    } else {
-      audioRef.current.pause();
+    if (autoPlay) {
+      audioRef.current.play();
+      setPlaying(true);
     }
-  }, [playing]);
+  }, [autoPlay]);
 
-  if (!autoPlay) return null;
+  const toggleMusic = () => {
+    if (!audioRef.current) return;
 
-  const togglePlayback = () => setPlaying((current) => !current);
+    if (playing) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+
+    setPlaying(!playing);
+  };
+
+  const format = (time) => {
+    if (!time) return "0:00";
+
+    const m = Math.floor(time / 60);
+    const s = Math.floor(time % 60);
+
+    return `${m}:${String(s).padStart(2, "0")}`;
+  };
 
   return (
     <>
-      <audio ref={audioRef} loop preload="metadata">
-        <source src={song} type="audio/mpeg" />
-      </audio>
+      <audio
+        ref={audioRef}
+        src={song}
+        loop
+      />
 
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        initial={{
+          opacity: 0,
+          y: 80,
+        }}
+        animate={{
+          opacity: autoPlay ? 1 : 0,
+          y: autoPlay ? 0 : 80,
+        }}
         className="
-          fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50
-          glass-strong rounded-2xl sm:rounded-3xl
-          px-4 py-3 sm:px-5 sm:py-4
-          flex items-center gap-3 sm:gap-4
-          max-w-[calc(100vw-2rem)]
+        fixed
+        bottom-6
+        right-6
+        z-50
+        w-[340px]
+        rounded-3xl
+        glass-strong
+        p-5
+        shadow-[0_25px_70px_rgba(0,0,0,.45)]
         "
-        role="region"
-        aria-label="Music player"
       >
-        <motion.div
-          animate={{ rotate: playing ? 360 : 0 }}
-          transition={{
-            duration: 4,
-            repeat: playing ? Infinity : 0,
-            ease: "linear",
-          }}
-          className="
-            w-11 h-11 sm:w-14 sm:h-14 shrink-0 rounded-full
-            bg-gradient-to-br from-pink-500 to-rose-600
-            flex items-center justify-center text-white shadow-lg
-          "
-          aria-hidden="true"
-        >
-          <FaMusic />
-        </motion.div>
+        <div className="flex gap-4 items-center">
 
-        <div className="min-w-0">
-          <p className="text-white font-semibold text-sm sm:text-base truncate">
-            {siteData.music.title}
-          </p>
-          <p className="text-pink-200/80 text-xs sm:text-sm truncate">
-            {siteData.music.artist}
-          </p>
+          <motion.div
+            animate={{
+              rotate: playing ? 360 : 0,
+            }}
+            transition={{
+              repeat: Infinity,
+              duration: 8,
+              ease: "linear",
+            }}
+            className="
+            w-16
+            h-16
+            rounded-full
+            bg-gradient-to-br
+            from-pink-500
+            to-fuchsia-600
+            flex
+            items-center
+            justify-center
+            shadow-xl
+            "
+          >
+            <FaMusic className="text-white text-xl" />
+          </motion.div>
+
+          <div className="flex-1">
+
+            <p className="text-xs uppercase tracking-[0.3em] text-pink-300">
+              Now Playing
+            </p>
+
+            <h3 className="text-white font-semibold">
+              I Wanna Be Yours
+            </h3>
+
+            <p className="text-pink-200 text-sm">
+              Arctic Monkeys
+            </p>
+
+          </div>
+
+          <button
+            onClick={toggleMusic}
+            className="
+            w-12
+            h-12
+            rounded-full
+            bg-pink-500
+            hover:bg-pink-600
+            transition
+            flex
+            items-center
+            justify-center
+            text-white
+            "
+          >
+            {playing ? <FaPause /> : <FaPlay />}
+          </button>
+
         </div>
 
-        <button
-          type="button"
-          onClick={togglePlayback}
-          aria-label={playing ? "Pause music" : "Play music"}
-          className="
-            ml-1 shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-full
-            bg-[var(--primary)] hover:bg-[var(--primary-deep)]
-            text-white flex items-center justify-center
-            transition-colors duration-300
-            focus-visible:outline focus-visible:outline-2
-            focus-visible:outline-offset-2 focus-visible:outline-pink-200
-          "
-        >
-          {playing ? <FaPause aria-hidden="true" /> : <FaPlay aria-hidden="true" />}
-        </button>
+        {/* Progress */}
+
+        <div className="mt-5">
+
+          <div className="h-1 rounded-full bg-white/10 overflow-hidden">
+
+            <motion.div
+              className="h-full bg-pink-400"
+              animate={{
+                width: `${progress}%`,
+              }}
+            />
+
+          </div>
+
+          <div className="flex justify-between mt-2 text-xs text-pink-200">
+
+            <span>{format(current)}</span>
+
+            <span>{format(duration)}</span>
+
+          </div>
+
+        </div>
+
+        {/* Equalizer */}
+
+        <div className="flex gap-1 mt-4">
+
+          {[0, 1, 2, 3, 4].map((bar) => (
+            <motion.div
+              key={bar}
+              animate={
+                playing
+                  ? {
+                      height: [8, 20, 12, 24, 8],
+                    }
+                  : {
+                      height: 8,
+                    }
+              }
+              transition={{
+                repeat: Infinity,
+                duration: 0.8,
+                delay: bar * 0.12,
+              }}
+              className="
+              w-1.5
+              rounded-full
+              bg-pink-400
+              "
+            />
+          ))}
+
+        </div>
+
       </motion.div>
     </>
   );
